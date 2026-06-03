@@ -5,7 +5,7 @@ import { createHash, randomBytes } from "crypto";
 import jwt from "jsonwebtoken";
 import prisma from "../db.js";
 
-const SESSION_TTL_MS  = 1* 60 * 1000;           
+const SESSION_TTL_MS  = 10 * 1000;           
 const JWT_SECRET      = process.env.JWT_SECRET || "wellsync-jwt-secret-change-in-prod";
 const JWT_EXPIRES_IN  = "2h";
 
