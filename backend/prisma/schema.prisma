@@ -1,0 +1,150 @@
+// prisma/schema.prisma
+// WellSync Enterprise - Full schema in 3NF
+// Bronze: Resource, Department, ResourceType
+// Silver: User, Role, Permission, RolePermission
+// Gold:   ActionLog, SuspiciousUser
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ── BRONZE: Lookup tables (3NF) ───────────────────────────────────────────────
+
+model Department {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique @db.VarChar(50)
+  resources Resource[]
+  users     User[]
+
+  @@map("departments")
+}
+
+model ResourceType {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique @db.VarChar(50)
+  resources Resource[]
+
+  @@map("resource_types")
+}
+
+model Resource {
+  id               Int          @id @default(autoincrement())
+  name             String       @db.VarChar(200)
+  unlockCondition  String       @db.VarChar(200)
+  rating           Float        @default(0)
+  views            Int          @default(0)
+  dateAdded        DateTime     @default(now()) @db.Date
+  departmentId     Int
+  department       Department   @relation(fields: [departmentId], references: [id])
+  typeId           Int
+  type             ResourceType @relation(fields: [typeId], references: [id])
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  @@map("resources")
+}
+
+// ── SILVER: Users, Roles, Permissions ─────────────────────────────────────────
+
+model Permission {
+  id          Int              @id @default(autoincrement())
+  name        String           @unique @db.VarChar(100)
+  description String?          @db.VarChar(255)
+  roles       RolePermission[]
+
+  @@map("permissions")
+}
+
+model Role {
+  id          Int              @id @default(autoincrement())
+  name        String           @unique @db.VarChar(50)
+  description String?          @db.VarChar(255)
+  permissions RolePermission[]
+  users       User[]
+
+  @@map("roles")
+}
+
+model RolePermission {
+  roleId       Int
+  permissionId Int
+  role         Role       @relation(fields: [roleId], references: [id])
+  permission   Permission @relation(fields: [permissionId], references: [id])
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+model User {
+  id           Int          @id @default(autoincrement())
+  email        String       @unique @db.VarChar(200)
+  fullName     String       @db.VarChar(200)
+  passwordHash String       @db.VarChar(255)
+  roleId       Int
+  role         Role         @relation(fields: [roleId], references: [id])
+  departmentId Int?
+  department   Department?  @relation(fields: [departmentId], references: [id])
+  isActive     Boolean      @default(true)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  logs         ActionLog[]
+
+  @@map("users")
+}
+
+// ── GOLD: Action Logging + Suspicious users ────────────────────────────────────
+
+model ActionLog {
+  id           Int      @id @default(autoincrement())
+  userId       Int?
+  user         User?    @relation(fields: [userId], references: [id])
+  groupId      String   @db.VarChar(50)
+  action       String   @db.VarChar(100)
+  actionInfo   String?  @db.Text
+  ipAddress    String?  @db.VarChar(45)
+  isSuspicious Boolean  @default(false)
+  timestamp    DateTime @default(now())
+
+  @@map("action_logs")
+}
+
+model SuspiciousUser {
+  id         Int       @id @default(autoincrement())
+  userId     Int       @unique
+  email      String    @db.VarChar(200)
+  reason     String    @db.Text
+  flaggedAt  DateTime  @default(now())
+  resolvedAt DateTime?
+  isResolved Boolean   @default(false)
+
+  @@map("suspicious_users")
+}
+
+// ── Password Reset Tokens ──────────────────────────────────────────────────────
+model PasswordResetToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  token     String   @unique @db.VarChar(255)
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("password_reset_tokens")
+}
+
+// ── OAuth Accounts (Google etc.) ───────────────────────────────────────────────
+model OAuthAccount {
+  id         Int    @id @default(autoincrement())
+  userId     Int
+  provider   String @db.VarChar(50)  // "google"
+  providerId String @db.VarChar(255) // Google sub ID
+  email      String @db.VarChar(200)
+
+  @@unique([provider, providerId])
+  @@map("oauth_accounts")
+}
