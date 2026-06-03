@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "prisma generate",
+    "start": "prisma generate && node src/index.js",
     "dev": "nodemon src/index.js",
-    "start": "node src/index.js",
     "db:migrate": "prisma migrate dev",
     "db:seed": "node prisma/seed.js",
     "db:studio": "prisma studio",
