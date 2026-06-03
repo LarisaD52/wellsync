@@ -59,7 +59,7 @@ export default function App() {
   const [isManager, setIsManager]   = useState(() => getCookie("ws_role") === "MANAGER");
 
   const { resources, isOnline, isSyncing, pendingCount, handleAdd, handleUpdate, handleDelete } =
-    useApi(initialResources, sessionId, token);
+    useApi(initialResources, sessionId, token, handleLogout);
 
   const { wsStatus } = useWebSocket((batch) => {
     batch.forEach(r => handleAdd(r));
