@@ -65,15 +65,17 @@ export default function App() {
 
   useEffect(() => {
     if (!sessionId || !token) return;
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch(`${API_BASE}/auth/me`, {
-          headers: { "x-session-id": sessionId, "Authorization": `Bearer ${token}` }
-        });
-        if (res.status === 401) handleLogout();
-      } catch {}
-    }, 10000);
-    return () => clearInterval(interval);
+    let timer = setTimeout(() => handleLogout(), 60 * 1000);
+    const reset = () => { clearTimeout(timer); timer = setTimeout(() => handleLogout(), 60 * 1000); };
+    window.addEventListener("mousemove", reset);
+    window.addEventListener("keydown", reset);
+    window.addEventListener("click", reset);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("mousemove", reset);
+      window.removeEventListener("keydown", reset);
+      window.removeEventListener("click", reset);
+    };
   }, [sessionId, token]);
     batch.forEach(r => handleAdd(r));
   });
