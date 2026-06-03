@@ -62,11 +62,12 @@ export default function App() {
     useApi(initialResources, sessionId, token, handleLogout);
 
   
+
   useEffect(() => {
     if (!sessionId || !token) return;
     const interval = setInterval(async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/health`, {
+        const res = await fetch(`${API_BASE}/auth/me`, {
           headers: { "x-session-id": sessionId, "Authorization": `Bearer ${token}` }
         });
         if (res.status === 401) handleLogout();
@@ -74,22 +75,6 @@ export default function App() {
     }, 10000);
     return () => clearInterval(interval);
   }, [sessionId, token]);
-
-  
-  useEffect(() => {
-    if (!sessionId || !token) return;
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch(`${API_BASE}/api/health`, {
-          headers: { "x-session-id": sessionId, "Authorization": `Bearer ${token}` }
-        });
-        if (res.status === 401) handleLogout();
-      } catch {}
-    }, 10000);
-    return () => clearInterval(interval);
-  }, [sessionId, token]);
-
-  const { wsStatus } = useWebSocket((batch) => {
     batch.forEach(r => handleAdd(r));
   });
 
