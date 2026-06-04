@@ -136,7 +136,7 @@ export default function UserMaterialsPage({ resources, username, department, onL
   );
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f8fafc", display: "flex", overflow: "hidden", maxWidth: "100vw" }} className="materials-root">
+    <div style={{ minHeight: "100vh", overflowX: "hidden", maxWidth: "100vw", background: "#f8fafc", display: "flex", overflow: "hidden", maxWidth: "100vw" }} className="materials-root">
       {/* Sidebar */}
       <aside className="materials-sidebar" style={{ width: "clamp(60px, 15vw, 192px)", background: "rgba(255,255,255,0.85)", backdropFilter: "blur(12px)", borderRight: "1px solid #e5e7eb", display: "flex", flexDirection: "column", padding: "1.5rem 1rem", gap: 6, flexShrink: 0 }}>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "1.5rem" }}>

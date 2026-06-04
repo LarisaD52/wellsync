@@ -17,7 +17,7 @@ export default function ManagerHomePage({ username = "Manager", resources = [], 
     : "0.0";
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", background: "linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%)" }}>
+    <div style={{ display: "flex", minHeight: "100vh", overflowX: "hidden", maxWidth: "100vw", background: "linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%)" }}>
       {/* Sidebar */}
       <aside style={{ width: 200, background: "rgba(255,255,255,0.85)", borderRight: "1px solid #e9d5ff", display: "flex", flexDirection: "column", padding: "24px 16px", gap: 8 }}>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 24 }}>

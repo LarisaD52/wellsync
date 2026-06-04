@@ -61,7 +61,7 @@ export default function OTPLoginPage() {
 
   return (
     <div style={{
-      minHeight: "100vh", display: "flex", alignItems: "center",
+      minHeight: "100vh", overflowX: "hidden", maxWidth: "100vw", display: "flex", alignItems: "center",
       justifyContent: "center", background: "linear-gradient(135deg, #e0f7fa, #e8f5e9)"
     }}>
       <div style={{

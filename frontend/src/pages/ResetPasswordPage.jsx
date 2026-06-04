@@ -45,7 +45,7 @@ export default function ResetPasswordPage() {
   }
 
   if (!token) return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #f0fdf4, #e0f2fe)" }}>
+    <div style={{ minHeight: "100vh", overflowX: "hidden", maxWidth: "100vw", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #f0fdf4, #e0f2fe)" }}>
       <div style={{ background: "white", borderRadius: 20, padding: 32, textAlign: "center" }}>
         <p style={{ color: "#ef4444", fontWeight: 600 }}>Invalid reset link.</p>
         <Link to="/forgot-password" style={{ color: "#16a34a", fontSize: 14 }}>Request a new one</Link>
@@ -54,7 +54,7 @@ export default function ResetPasswordPage() {
   );
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #f0fdf4, #e0f2fe)", padding: 16 }}>
+    <div style={{ minHeight: "100vh", overflowX: "hidden", maxWidth: "100vw", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #f0fdf4, #e0f2fe)", padding: 16 }}>
       <div style={{ background: "rgba(255,255,255,0.85)", borderRadius: 20, boxShadow: "0 8px 32px rgba(0,0,0,0.1)", padding: 40, width: "100%", maxWidth: 420 }}>
         <h2 style={{ margin: "0 0 8px", fontSize: 24, fontWeight: 700, color: "#1f2937" }}>Reset Password</h2>
         <p style={{ margin: "0 0 24px", fontSize: 14, color: "#9ca3af" }}>Enter your new password below.</p>
