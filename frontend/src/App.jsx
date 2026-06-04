@@ -70,8 +70,8 @@ export default function App() {
 
   useEffect(() => {
     if (!sessionId || !token) return;
-    let timer = setTimeout(() => logoutRef.current(), 60 * 1000);
-    const reset = () => { clearTimeout(timer); timer = setTimeout(() => logoutRef.current(), 60 * 1000); };
+    let timer = setTimeout(() => logoutRef.current(), 15 * 1000);
+    const reset = () => { clearTimeout(timer); timer = setTimeout(() => logoutRef.current(), 15 * 1000); };
     window.addEventListener("mousemove", reset);
     window.addEventListener("keydown", reset);
     window.addEventListener("click", reset);
