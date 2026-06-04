@@ -138,7 +138,7 @@ export default function UserMaterialsPage({ resources, username, department, onL
   return (
     <div style={{ minHeight: "100vh", background: "#f8fafc", display: "flex" }} className="materials-root">
       {/* Sidebar */}
-      <aside className="materials-sidebar" style={{ width: 192, background: "rgba(255,255,255,0.85)", backdropFilter: "blur(12px)", borderRight: "1px solid #e5e7eb", display: "flex", flexDirection: "column", padding: "1.5rem 1rem", gap: 6, flexShrink: 0 }}>
+      <aside className="materials-sidebar" style={{ width: 192, background: "rgba(255,255,255,0.85)", backdropFilter: "blur(12px)", borderRight: "1px solid #e5e7eb", display: window.innerWidth < 640 ? "none" : "flex", flexDirection: "column", padding: "1.5rem 1rem", gap: 6, flexShrink: 0 }}>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "1.5rem" }}>
           <div style={{ width: 48, height: 48, borderRadius: "50%", border: "2px solid #60a5fa", background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
             <img src="/assets/logo-leaf.png" alt="Logo" style={{ width: 36, height: 36, objectFit: "contain" }} onError={e => { e.currentTarget.style.display = "none"; }} />
