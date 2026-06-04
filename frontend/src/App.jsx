@@ -82,7 +82,6 @@ export default function App() {
       window.removeEventListener("click", reset);
     };
   }, [sessionId, token]);
-  });
 
   // password param now passed from LoginPage
   async function handleLogin(nameOrEmail = "", dept = "", password = null) {
