@@ -10,3 +10,8 @@ body {
   margin: 0;
   font-family: 'Inter', system-ui, sans-serif;
 }
+
+@media (max-width: 640px) {
+  .materials-sidebar { display: none !important; }
+  .materials-root { flex-direction: column !important; }
+}
