@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { initialResources } from "./data/store";
 import { saveUsername, loadUsername, deleteCookie, COOKIE_KEYS, setCookie, getCookie } from "./hooks/Cookies";
@@ -63,10 +63,15 @@ export default function App() {
 
   
 
+  const logoutRef = useRef(null);
+  useEffect(() => {
+    logoutRef.current = handleLogout;
+  });
+
   useEffect(() => {
     if (!sessionId || !token) return;
-    let timer = setTimeout(() => handleLogout(), 60 * 1000);
-    const reset = () => { clearTimeout(timer); timer = setTimeout(() => handleLogout(), 60 * 1000); };
+    let timer = setTimeout(() => logoutRef.current(), 60 * 1000);
+    const reset = () => { clearTimeout(timer); timer = setTimeout(() => logoutRef.current(), 60 * 1000); };
     window.addEventListener("mousemove", reset);
     window.addEventListener("keydown", reset);
     window.addEventListener("click", reset);
