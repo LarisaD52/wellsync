@@ -82,7 +82,6 @@ export default function App() {
       window.removeEventListener("click", reset);
     };
   }, [sessionId, token]);
-    batch.forEach(r => handleAdd(r));
   });
 
   // password param now passed from LoginPage
