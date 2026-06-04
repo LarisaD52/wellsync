@@ -12,6 +12,7 @@ body {
 }
 
 @media (max-width: 640px) {
-  .materials-sidebar { display: none !important; }
+  .materials-sidebar { display: none !important; width: 0 !important; }
   .materials-root { flex-direction: column !important; }
+  .materials-root > *:not(.materials-sidebar) { width: 100% !important; }
 }
